@@ -4,23 +4,31 @@ import com.example.praktam_2417051006.R
 object Isi_kamus {
     val listKamus = listOf(
         Kamus_Binggris(
-            kataInggris = " Cat",
-            artiIndonesia = "Kucing",
-            contohKalimat = "I love play cat.",
-            gambarResId = R.drawable.cat
+            kataInggris = "Object",
+            artiIndonesia = "Benda",
+            gambarResId = R.drawable.`object`
         ),
         Kamus_Binggris(
-            kataInggris = "Dimsum",
-            artiIndonesia = "Pangsit",
-            contohKalimat = "I eat dimsum everyday.",
-            gambarResId = R.drawable.dimsum
+            kataInggris = "Fruit",
+            artiIndonesia = "Buah",
+            gambarResId = R.drawable.fruit
         ),
         Kamus_Binggris(
-            kataInggris = "Peach",
-            artiIndonesia = "Persik",
-            contohKalimat = "Your skin like peach.",
-            gambarResId = R.drawable.peach
-        )
+            kataInggris = "Vehicle",
+            artiIndonesia = "Kendaraan",
+            gambarResId = R.drawable.vehicle
+        ),
+        Kamus_Binggris(
+            kataInggris = "Animal",
+            artiIndonesia = "Hewan",
+            gambarResId = R.drawable.animal
+        ),
+        Kamus_Binggris(
+            kataInggris = "Stationary",
+            artiIndonesia = "Alat Tulis",
+            gambarResId = R.drawable.stationary
+        ),
+
 
     )
 

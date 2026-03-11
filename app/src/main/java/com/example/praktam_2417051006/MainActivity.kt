@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.praktam_2417051006.Fitur.DashboardScreen
+import com.example.praktam_2417051006.fitur.DashboardScreen
 import com.example.praktam_2417051006.ui.theme.PrakTAM_2417051006Theme
 
 class MainActivity : ComponentActivity() {
