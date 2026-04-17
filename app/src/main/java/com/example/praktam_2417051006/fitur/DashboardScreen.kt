@@ -21,7 +21,7 @@ import com.example.praktam_2417051006.Model.Isi_kamus
 import com.example.praktam_2417051006.Model.Kamus_Binggris
 
 @Composable
-fun DashboardScreen(innerPadding: PaddingValues) {
+fun DashboardScreen(innerPadding: PaddingValues, onDetailClick: (Int) -> Unit) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -62,7 +62,7 @@ fun DashboardScreen(innerPadding: PaddingValues) {
                     ) {
                         itemsIndexed(Isi_kamus.listKamus) { index, kamus ->
                             val bgColor = if (index % 2 == 0) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.secondaryContainer
-                            KamusCard(kamus, bgColor, isRow = true)
+                            KamusCard(kamus, bgColor, isRow = true, onClick = { onDetailClick(index) })
                         }
                     }
                 }
@@ -80,7 +80,7 @@ fun DashboardScreen(innerPadding: PaddingValues) {
             itemsIndexed(Isi_kamus.listKamus) { index, kamus ->
                 val bgColor = if (index % 2 == 0) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.secondaryContainer
                 Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                    KamusCard(kamus, bgColor, isRow = false)
+                    KamusCard(kamus, bgColor, isRow = false, onClick = { onDetailClick(index) })
                 }
             }
         }
@@ -88,9 +88,9 @@ fun DashboardScreen(innerPadding: PaddingValues) {
 }
 
 @Composable
-fun KamusCard(kamus: Kamus_Binggris, containerColor: Color, isRow: Boolean) {
+fun KamusCard(kamus: Kamus_Binggris, containerColor: Color, isRow: Boolean, onClick: () -> Unit) {
     var isFavorite by remember { mutableStateOf(false) }
-    
+
     Card(
         modifier = if (isRow) Modifier.width(180.dp) else Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = containerColor),
@@ -135,22 +135,22 @@ fun KamusCard(kamus: Kamus_Binggris, containerColor: Color, isRow: Boolean) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
                     maxLines = 1
                 )
-                
+
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 Button(
-                    onClick = { },
-                    enabled = false,
+                    onClick = onClick,
+                    enabled = true,
                     modifier = Modifier.fillMaxWidth(),
                     contentPadding = PaddingValues(vertical = 4.dp),
                     colors = ButtonDefaults.buttonColors(
-                        disabledContainerColor = Color.White,
-                        disabledContentColor = MaterialTheme.colorScheme.primary
+                        containerColor = Color.White,
+                        contentColor = MaterialTheme.colorScheme.primary
                     ),
                     elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
                 ) {
                     Text(
-                        text = "Lihat Detail", 
+                        text = "Lihat Detail",
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Bold
                     )
