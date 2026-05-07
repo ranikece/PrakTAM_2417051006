@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -16,7 +15,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.praktam_2417051006.Model.Isi_kamus
+import coil.compose.AsyncImage
+import com.example.praktam_2417051006.model.Kamus_Binggris
 import com.example.praktam_2417051006.fitur.DashboardScreen
 import com.example.praktam_2417051006.ui.theme.PrakTAM_2417051006Theme
 import kotlinx.coroutines.delay
@@ -28,22 +28,29 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PrakTAM_2417051006Theme {
-                var currentScreen by remember { mutableStateOf<String>("dashboard") }
+                var currentScreen by remember { mutableStateOf("dashboard") }
+                var kamusList by remember { mutableStateOf<List<Kamus_Binggris>>(emptyList()) }
                 var selectedIndex by remember { mutableStateOf(0) }
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     when (currentScreen) {
                         "dashboard" -> {
-                            DashboardScreen(innerPadding, onDetailClick = { index ->
-                                selectedIndex = index
-                                currentScreen = "detail"
-                            })
+                            DashboardScreen(
+                                innerPadding = innerPadding,
+                                onKamusLoaded = { fetchedList -> kamusList = fetchedList },
+                                onDetailClick = { index ->
+                                    selectedIndex = index
+                                    currentScreen = "detail"
+                                }
+                            )
                         }
                         "detail" -> {
-                            DetailScreen(
-                                index = selectedIndex,
-                                onBack = { currentScreen = "dashboard" }
-                            )
+                            if (kamusList.isNotEmpty() && selectedIndex < kamusList.size) {
+                                DetailScreen(
+                                    kamus = kamusList[selectedIndex],
+                                    onBack = { currentScreen = "dashboard" }
+                                )
+                            }
                         }
                     }
                 }
@@ -54,11 +61,19 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(index: Int, onBack: () -> Unit) {
-    val kamus = Isi_kamus.listKamus[index]
+fun DetailScreen(kamus: Kamus_Binggris, onBack: () -> Unit) {
     var isLoading by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    val placeholderRes = when (kamus.category.lowercase()) {
+        "animal" -> R.drawable.animal
+        "fruit" -> R.drawable.fruit
+        "object" -> R.drawable.`object`
+        "stationary" -> R.drawable.stationary
+        "vehicle" -> R.drawable.vehicle
+        else -> R.drawable.animal
+    }
 
     Scaffold(
         topBar = {
@@ -85,12 +100,12 @@ fun DetailScreen(index: Int, onBack: () -> Unit) {
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 Column {
-                    Image(
-                        painter = painterResource(id = kamus.gambarResId),
+                    AsyncImage(
+                        model = kamus.imageUrl,
                         contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(250.dp),
+                        placeholder = painterResource(id = placeholderRes),
+                        error = painterResource(id = placeholderRes),
+                        modifier = Modifier.fillMaxWidth().height(250.dp),
                         contentScale = ContentScale.Crop
                     )
                     Column(modifier = Modifier.padding(16.dp)) {
