@@ -16,12 +16,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.praktam_2417051006.data.repository.KamusRepository
 import com.example.praktam_2417051006.model.Kamus_Binggris
 import com.example.praktam_2417051006.fitur.DashboardScreen
 import com.example.praktam_2417051006.ui.theme.PrakTAM_2417051006Theme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +65,7 @@ fun DetailScreen(kamus: Kamus_Binggris, onBack: () -> Unit) {
     var isLoading by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val repository = remember { KamusRepository() }
 
     val placeholderRes = when (kamus.category.lowercase()) {
         "animal" -> R.drawable.animal

@@ -18,8 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.praktam_2417051006.model.Kamus_Binggris
-import com.example.praktam_2417051006.network.RetrofitClient
+import com.example.praktam_2417051006.data.api.RetrofitClient
 import com.example.praktam_2417051006.R
+import com.example.praktam_2417051006.data.repository.KamusRepository
 
 @Composable
 fun DashboardScreen(
@@ -30,9 +31,12 @@ fun DashboardScreen(
     var kamusList by remember { mutableStateOf<List<Kamus_Binggris>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
+    var repository = KamusRepository()
 
     LaunchedEffect(Unit) {
         try {
+            var isloading = true
+            var kamus = repository.getKamus()
             val response = RetrofitClient.instance.getKamus()
             kamusList = response
             onKamusLoaded(response)

@@ -1,4 +1,4 @@
-package com.example.praktam_2417051006.network
+package com.example.praktam_2417051006.data.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

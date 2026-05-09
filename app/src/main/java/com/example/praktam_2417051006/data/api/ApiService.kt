@@ -1,4 +1,4 @@
-package com.example.praktam_2417051006.network
+package com.example.praktam_2417051006.data.api
 
 import com.example.praktam_2417051006.model.Kamus_Binggris
 import retrofit2.http.GET
